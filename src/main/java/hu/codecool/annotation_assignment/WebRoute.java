@@ -1,4 +1,13 @@
 package hu.codecool.annotation_assignment;
 
-public class WebRoute {
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface WebRoute {
+
+    String path();
 }
