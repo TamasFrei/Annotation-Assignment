@@ -5,15 +5,21 @@ import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class MyHandler implements HttpHandler {
 
-    private Routes routes;
+    private Object routes;
 
-    public MyHandler(Routes routes) {
-        this.routes = routes;
+    public MyHandler() {
+        try {
+            Constructor<?> constructor = Routes.class.getConstructor();
+            this.routes = constructor.newInstance();
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
