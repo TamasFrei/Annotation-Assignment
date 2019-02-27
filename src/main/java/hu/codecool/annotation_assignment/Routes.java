@@ -12,4 +12,9 @@ public class Routes {
         return "This is another test route";
     }
 
+    @WebRoute(path = "/test", method = HttpRequestMethod.POST)
+    public String testPost() {
+        return "You sent a post request on test route";
+    }
+
 }
