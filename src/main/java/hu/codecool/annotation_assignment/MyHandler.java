@@ -20,13 +20,19 @@ public class MyHandler implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
 
         String response;
+        HttpRequestMethod method;
         String path = httpExchange.getRequestURI().getPath();
+        if (httpExchange.getRequestMethod().equals("GET")) {
+            method = HttpRequestMethod.GET;
+        } else {
+            method = HttpRequestMethod.POST;
+        }
 
         for(Method m: Routes.class.getMethods()) {
             if(m.isAnnotationPresent(WebRoute.class)) {
                 WebRoute webRoute = m.getAnnotation(WebRoute.class);
 
-                if (webRoute.path().equals(path)) {
+                if (webRoute.path().equals(path) && webRoute.method().equals(method)) {
                     try {
                         response = m.invoke(routes).toString();
                         sendResponse(httpExchange, response);
